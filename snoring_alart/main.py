@@ -2,11 +2,11 @@ from audio_utils import copy_and_convert_user_audio_to_wav
 from snore_model import predict_snoring_windows
 
 
-def main():
-    print("Snoring Detection - Audio File Test")
-    print("-----------------------------------")
+def run_prediction_once():
+    user_path = input("\nEnter full path to audio file, or type q to quit: ").strip()
 
-    user_path = input("Enter full path to audio file: ")
+    if user_path.lower() in ["q", "quit", "exit"]:
+        return False
 
     try:
         wav_path = copy_and_convert_user_audio_to_wav(user_path)
@@ -32,6 +32,21 @@ def main():
     except Exception as e:
         print("\nError:")
         print(e)
+
+    return True
+
+
+def main():
+    print("Snoring Detection - Audio File Test")
+    print("-----------------------------------")
+    print("Type q / quit / exit to stop.")
+
+    while True:
+        should_continue = run_prediction_once()
+
+        if not should_continue:
+            print("Stopped.")
+            break
 
 
 if __name__ == "__main__":
